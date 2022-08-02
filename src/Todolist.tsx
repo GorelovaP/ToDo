@@ -2,6 +2,8 @@ import React, {ChangeEvent} from 'react';
 import {FilterValuesType} from './App';
 import {AddItemForm} from "./components/AddItemForm";
 import {EditableSpan} from "./components/EditableSpan";
+import {Button, Checkbox, IconButton} from "@mui/material";
+import {Delete} from "@mui/icons-material";
 
 export type TaskType = {
     id: string
@@ -17,8 +19,8 @@ type PropsType = {
     changeFilter: (value: FilterValuesType, todolistId: string) => void
     addTask: (title: string, todolistId: string) => void
     changeTaskStatus: (id: string, isDone: boolean, todolistId: string) => void
-    changeTaskTitle: (id: string,title: string, todolistId: string) => void
-    changeTodoListTitle: ( todolistId: string, title: string) => void
+    changeTaskTitle: (id: string, title: string, todolistId: string) => void
+    changeTodoListTitle: (todolistId: string, title: string) => void
     removeTodolist: (id: string) => void
     filter: FilterValuesType
 }
@@ -29,22 +31,24 @@ export function Todolist(props: PropsType) {
     const onActiveClickHandler = () => props.changeFilter("active", props.id);
     const onCompletedClickHandler = () => props.changeFilter("completed", props.id);
 
-    const addTask=(title:string)=>{
+    const addTask = (title: string) => {
         props.addTask(title, props.id);
     }
 
-    const onChangeTodoListTitle= (title: string) => {
+    const onChangeTodoListTitle = (title: string) => {
         props.changeTodoListTitle(props.id, title);
     }
 
     return <div>
-        <h3> <EditableSpan title={props.title} onChange={onChangeTodoListTitle}/>
-            <button onClick={removeTodolist}>x</button>
+        <h3><EditableSpan title={props.title} onChange={onChangeTodoListTitle}/>
+            <IconButton onClick={removeTodolist} aria-label="delete" size="large">
+                <Delete/>
+            </IconButton>
         </h3>
         <div>
-           <AddItemForm addItem={addTask}/>
+            <AddItemForm addItem={addTask}/>
         </div>
-        <ul>
+        <div>
             {
                 props.tasks.map(t => {
                     const onClickHandler = () => props.removeTask(t.id, props.id)
@@ -56,25 +60,26 @@ export function Todolist(props: PropsType) {
                         props.changeTaskTitle(t.id, newValue, props.id);
                     }
 
-                    return <li key={t.id} className={t.isDone ? "is-done" : ""}>
-                        <input type="checkbox" onChange={onChangeStatus} checked={t.isDone}/>
+                    return <div key={t.id} className={t.isDone ? "is-done" : ""}>
+                        <Checkbox onChange={onChangeStatus} checked={t.isDone} color={"secondary"}/>
                         <EditableSpan onChange={onChangeTitle} title={t.title}/>
-                        <button onClick={onClickHandler}>x</button>
-                    </li>
-                })
+                        <IconButton onClick={onClickHandler} aria-label="delete" size="small">
+                            <Delete fontSize="small"/>
+                        </IconButton>
+                    </div>
+                },)
             }
-        </ul>
+        </div>
         <div>
-            <button className={props.filter === 'all' ? "active-filter" : ""}
+            <Button color={"info"} variant={props.filter === 'all' ? "contained" : "text"}
                     onClick={onAllClickHandler}>All
-            </button>
-            <button className={props.filter === 'active' ? "active-filter" : ""}
+            </Button>
+            <Button color={"primary"} variant={props.filter === 'active' ? "contained" : "text"}
                     onClick={onActiveClickHandler}>Active
-            </button>
-            <button className={props.filter === 'completed' ? "active-filter" : ""}
+            </Button>
+            <Button color={"secondary"} variant={props.filter === 'completed' ? "contained" : "text"}
                     onClick={onCompletedClickHandler}>Completed
-            </button>
+            </Button>
         </div>
     </div>
 }
-
