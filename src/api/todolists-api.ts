@@ -8,6 +8,31 @@ const instance = axios.create({
     }
 })
 
+export type loginPramsType = {
+    email: string,
+    password: string,
+    rememberMe?: boolean,
+    captcha?: string
+}
+export type MeType = {
+    id: number,
+    email: string,
+    login: string
+}
+export const authAPI = {
+    login(data: loginPramsType) {
+        return instance.post <{ email: string, password: string, rememberMe?: boolean, captcha?: string }, AxiosResponse<ResponseType<{ userId: number }>>>("auth/login", data)
+    },
+    logOut() {
+        return instance.delete<ResponseType>('auth/login');
+    },
+    me() {
+        return instance.get<ResponseType<MeType>>('auth/me');
+    }
+
+
+}
+
 // api
 export const todolistsAPI = {
     getTodolists() {
