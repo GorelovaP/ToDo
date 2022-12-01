@@ -2,7 +2,7 @@
 
 Todolist
 
-![portfolio](src/todo.png)
+![portfolio](todo.png)
 
 <hr/>
 
