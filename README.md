@@ -13,7 +13,7 @@ change their name, create, delete, modify and sort tasks in them. Registration i
 this application,I also used a storybook, that allows me to develop components in isolation, which improves testability
 and speed of development. I have also additionally written unit tests.
 
-DEMO: https://gorelovap.github.io/ToDo/#/
+DEMO: https://gorelovap.github.io/ToDo/
 <hr/>
 
 ## Built With:
