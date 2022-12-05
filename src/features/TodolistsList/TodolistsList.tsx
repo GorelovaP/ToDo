@@ -6,10 +6,10 @@ import {Grid} from '@material-ui/core'
 import {AddItemForm, AddItemFormSubmitHelperType} from '../../components/AddItemForm/AddItemForm'
 import {Todolist} from './Todolist/Todolist'
 import {selectIsLoggedIn} from '../Auth/selectors'
-import { todolistsActions} from './index'
+import {todolistsActions} from './index'
 import {AppRootStateType} from '../../utils/types'
 import {useActions, useAppDispatch} from '../../utils/redux-utils'
-import { Navigate } from 'react-router-dom'
+import {Navigate} from 'react-router-dom'
 
 type PropsType = {
     demo?: boolean
@@ -45,7 +45,9 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
         if (demo || !isLoggedIn) {
             return
         }
-        fetchTodolistsTC()
+        if (!todolists.length) {
+            fetchTodolistsTC()
+        }
     }, [])
 
 

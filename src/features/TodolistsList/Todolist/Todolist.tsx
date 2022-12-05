@@ -25,7 +25,9 @@ export const Todolist = React.memo(function ({demo = false, ...props}: PropsType
         if (demo) {
             return
         }
-        fetchTasks(props.todolist.id)
+        if (!props.tasks.length) {
+            fetchTasks(props.todolist.id)
+        }
     }, [])
 
     const addTaskCallback = useCallback(async (title: string, helper: AddItemFormSubmitHelperType) => {
@@ -80,7 +82,7 @@ export const Todolist = React.memo(function ({demo = false, ...props}: PropsType
         <IconButton
             size={'small'}
             onClick={removeTodolist} disabled={props.todolist.entityStatus === 'loading'}
-                    style={{position: 'absolute', right: '5px', top: '5px'}}
+            style={{position: 'absolute', right: '5px', top: '5px'}}
         >
             <Delete fontSize={'small'}/>
         </IconButton>

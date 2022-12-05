@@ -22,11 +22,7 @@ import {useActions} from '../utils/redux-utils'
 import {Routes, Route} from 'react-router-dom'
 
 
-type PropsType = {
-    demo?: boolean
-}
-
-function App({demo = false}: PropsType) {
+function App() {
     const status = useSelector(selectStatus)
     const isInitialized = useSelector(selectIsInitialized)
     const isLoggedIn = useSelector(authSelectors.selectIsLoggedIn)
@@ -35,7 +31,7 @@ function App({demo = false}: PropsType) {
     const {initializeApp} = useActions(appActions)
 
     useEffect(() => {
-        if (!demo) {
+        if (!isInitialized) {
             initializeApp()
         }
     }, [])
@@ -67,9 +63,9 @@ function App({demo = false}: PropsType) {
                 </Toolbar>
                 {status === 'loading' && <LinearProgress/>}
             </AppBar>
-            <Container >
+            <Container>
                 <Routes>
-                    <Route path={'/'} element={<TodolistsList demo={demo}/>}/>
+                    <Route path={'/'} element={<TodolistsList/>}/>
                     <Route path={'/login'} element={<Login/>}/>
                 </Routes>
             </Container>
